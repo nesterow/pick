@@ -10,7 +10,7 @@ import {
 } from "./deps.ts";
 
 export const CACHE_DIR = join((await cacheDir()) ?? ".cache", "__pick_cache0");
-Deno.mkdir(CACHE_DIR).catch((_) => {});
+await Deno.mkdir(CACHE_DIR).catch((_) => {});
 
 type TarEntry = TarMeta & Deno.Reader;
 interface GithubPickOptions {
@@ -19,11 +19,19 @@ interface GithubPickOptions {
   pick: RegExp[];
 }
 
+/**
+ * Pick files from a github repo.
+ * @param {GithubPickOptions} opts - { repo: "denoland/deno", version: "v1.0.0", pick: [/\.ts$/] }
+ */
 export async function* githubPick({ repo, version, pick }: GithubPickOptions) {
+  await Deno.mkdir(join(CACHE_DIR, repo.split("/").shift() ?? "")).catch(
+    (_) => {},
+  );
   const _cached = await getFetchCache(`${repo}@${version}`);
   if (_cached) {
     const reader = await Deno.open(_cached);
     yield* tarGzPickFiles(reader, pick);
+    reader.close();
   } else {
     yield* githubPickFiles({ repo, version, pick });
   }
@@ -41,9 +49,11 @@ export async function* githubPickFiles(
   const targz = await fetch(
     `https://github.com/${repo}/archive/refs/tags/${version}.tar.gz`,
   );
-  await putFetchCache(targz.body, `${repo}@${version}`);
-  const reader = readerFromStreamReader(targz.body!.getReader());
-  yield* tarGzPickFiles(reader, pick);
+  const name = `${repo}@${version}`;
+  await putFetchCache(targz.body, name);
+  const file = await Deno.open(join(CACHE_DIR, name));
+  yield* tarGzPickFiles(file, pick);
+  file.close();
 }
 
 /**
@@ -77,7 +87,10 @@ export async function* tarGzPickFiles(
  */
 export async function putFetchCache(body: Response["body"], name: string) {
   const reader = readerFromStreamReader(body!.getReader());
-  const writer = await Deno.open(join(CACHE_DIR, name), { write: true });
+  const writer = await Deno.open(join(CACHE_DIR, name), {
+    write: true,
+    create: true,
+  });
   await copy(reader, writer);
   writer.close();
 }

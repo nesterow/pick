@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "test": "deno test -A --no-check  tests/"
+  },
+  "compilerOptions": {
+    "strict": true
+  }
+}
