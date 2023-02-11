@@ -76,7 +76,7 @@ function asReadable$(entry: ConfigEntry): ReadableEntry {
             Expected: <repo>@<version>`,
           );
         }
-        read = () => githubPick({ repo, version: version.join(""), pick });
+        read = () => githubPick({ repo, version: version.join("@"), pick });
         break;
       }
       default: {
@@ -134,6 +134,7 @@ export async function* githubPick(
 export async function* githubPickFiles(
   { repo, version, pick }: GithubPickOptions,
 ): ReturnType<ReadableEntry["read"]> {
+  console.log(`https://github.com/${repo}/archive/refs/tags/${version}.tar.gz`);
   const targz = await fetch(
     `https://github.com/${repo}/archive/refs/tags/${version}.tar.gz`,
   );
