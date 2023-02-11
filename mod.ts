@@ -134,7 +134,6 @@ export async function* githubPick(
 export async function* githubPickFiles(
   { repo, version, pick }: GithubPickOptions,
 ): ReturnType<ReadableEntry["read"]> {
-  console.log(`https://github.com/${repo}/archive/refs/tags/${version}.tar.gz`);
   const targz = await fetch(
     `https://github.com/${repo}/archive/refs/tags/${version}.tar.gz`,
   );
