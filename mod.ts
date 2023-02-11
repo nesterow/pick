@@ -69,14 +69,14 @@ function asReadable$(entry: ConfigEntry): ReadableEntry {
         break;
       }
       case "github": {
-        const [repo, version] = entry.source.split("@");
+        const [repo, ...version] = entry.source.split("@");
         if (!version) {
           throw new Error(
-            `Invalid source format: ${entry.source} 
+            `Invalid source format: ${entry.source}
             Expected: <repo>@<version>`,
           );
         }
-        read = () => githubPick({ repo, version, pick });
+        read = () => githubPick({ repo, version: version.join(""), pick });
         break;
       }
       default: {
