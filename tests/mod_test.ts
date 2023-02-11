@@ -74,7 +74,7 @@ test("mod", async (t) => {
   });
 });
 
-test("pickit: cmd line interface", async () => {
+test("cmd line interface", async () => {
   const p = await Deno.run({
     cmd: [
       "deno",
@@ -90,4 +90,5 @@ test("pickit: cmd line interface", async () => {
   const status = await p.status();
   assert(status.success);
   await Deno.remove("daisyui", { recursive: true });
+  await p.close();
 });
