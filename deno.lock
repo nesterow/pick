@@ -40,6 +40,7 @@
     "https://deno.land/x/transform@v0.4.0/transformers/zlib/gzip.ts": "8008eb620908025c9768bf2fe43c542b122224deb13ce37034237ed44fa97827",
     "https://deno.land/x/transform@v0.4.0/transformers/zlib/mod.ts": "ed83911768d491342fb3e09a9b23217c9345ce0b721c69346ed53416d203e195",
     "https://deno.land/x/transform@v0.4.0/transformers/zlib/pako.js": "f7077bb75f3f8a479fc945cffa93faa113be1d6c1d1c6d8566d35a6406ad40b8",
+    "https://deno.land/x/yaml@v2.2.1/util.js": "2f1db26f6cc426ef698210b592f40cec49be1b6c4b34e7f2d61904786242bd85",
     "https://raw.githubusercontent.com/marcosc90/encoding-wasm/v0.1.0/dist/encoding_wasm.js": "d7bb9e589b3505f75d220eadb127d98a3b0ef19a884bafc8f94db7a90a24eacf",
     "https://raw.githubusercontent.com/marcosc90/encoding-wasm/v0.1.0/dist/encoding_wasm_bytes.js": "c826533d17099db2112c9ddb3cbcd013f7afef5273f4666ac7e0196cc6424659",
     "https://raw.githubusercontent.com/marcosc90/encoding-wasm/v0.1.0/mod.ts": "0ebef5c2b134fa6b80ebd52242b23cd19b0dd8d661d07d3fb6cef7b971da99f7"
