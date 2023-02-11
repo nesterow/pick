@@ -33,7 +33,7 @@ deno run -A https://deno.land/x/pickit/pickit.ts [args]...
 ## Using config file
 
 If you need to pick files from multiple sources, you can use a config file. The
-config file should exportan array of `PickConfig` objects.
+config file should export an array of `PickConfig` objects.
 
 ```typescript
 import type { PickConfig } from "https://deno.land/x/pickit/mod.d.ts";
@@ -63,6 +63,28 @@ pickit ./config.ts
 
 Most methods are exported from `mod.ts` and can be used within your code. Read
 the [API documentation](https://deno.land/x/pickit/mod.ts)
+
+> All functions are using RegExp to match files. So you need to convert globs
+> explicitly. Example:
+
+```typescript
+import { githubPick } from "https://deno.land/x/pickit@v0.0.3/mod.ts";
+import { globToRegExp, join } from "$std/path/mod.ts";
+import { readAll } from "$std/streams/conversion.ts";
+
+for await (
+  const cssFile of githubPick({
+    repo: "saadeghi/daisyui",
+    version: "v2.47.0",
+    pick: [
+      globToRegExp("**/src/components/**/*.css"),
+    ],
+  })
+) {
+  const css = new TextDecoder("utf-8").decode(await readAll(cssFile));
+  // do something with css
+}
+```
 
 ## License
 
