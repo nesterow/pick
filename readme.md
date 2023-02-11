@@ -1,4 +1,4 @@
-# Pick it
+# Pickit
 
 This utility helps you to extract files from tarballs and github repos using
 glob syntax or regular expressions. You can use either a config file or command
@@ -36,7 +36,6 @@ If you need to pick files from multiple sources, you can use a config file. The
 config file should exportan array of `PickConfig` objects.
 
 ```typescript
-// config.ts
 import type { PickConfig } from "https://deno.land/x/pickit/mod.d.ts";
 export default [
     {
