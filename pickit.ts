@@ -8,6 +8,8 @@ import { cleanFetchCache, write } from "./mod.ts";
 if (Deno.args.length == 1) {
   if (Deno.args[0] == "clean") {
     await cleanFetchCache();
+  } else if (Deno.args[0] == "help") {
+    printHelp();
   } else {
     const config = await import(Deno.args[0]);
     await write(config.default);
@@ -16,16 +18,28 @@ if (Deno.args.length == 1) {
   const [source, output, ...pick] = Deno.args;
   await write([{ source, output, pick }]);
 } else {
+  printHelp();
+}
+
+function printHelp() {
   console.log(
     `
   %cPickIt
   `,
     "font-size: 1.5em; font-weight: bold",
   );
-  console.log(`
+  console.log(
+    `
         This utility helps you to extract files from tarballs and github repos using glob syntax or regular expressions.
         You can use either a config file or command line arguments.
-    `);
+
+          pickit %cclean - cleans the cache of fetched files.
+          %cpickit %chelp - prints this help message.
+    `,
+    "color: #ccb;",
+    "",
+    "color: #ccb;",
+  );
   console.log(
     `
   %cUsage:
@@ -74,7 +88,7 @@ if (Deno.args.length == 1) {
             },
         ] as PickConfig;
 
-        
+
     `,
     "color: #aab;",
   );
